@@ -1,40 +1,58 @@
 import streamlit as st
 
-# 💬 MBTI별 친해지기 좋은 접근법 데이터
-mbti_tips = {
-    "INTJ": ("📚 깊은 대화로 시작하세요", "표면적인 이야기보다 철학, 미래, 전략 같은 주제를 좋아해요."),
-    "INTP": ("🧠 아이디어를 공유하세요", "논리적인 주제나 새로운 개념을 이야기하면 흥미를 느껴요."),
-    "ENTJ": ("🎯 목표에 대해 이야기하세요", "리더십과 성취 이야기에 매력을 느껴요."),
-    "ENTP": ("🎢 재밌는 토론을 해보세요", "가볍게 논쟁하고 장난치는 걸 즐겨요."),
-    "INFJ": ("🌌 감정과 꿈을 나눠보세요", "깊은 공감과 진심 어린 대화를 좋아해요."),
-    "INFP": ("🎨 감성적인 이야기로 접근하세요", "감정, 가치, 예술 이야기에 반응해요."),
-    "ENFJ": ("💞 관심을 표현해보세요", "다른 사람을 배려하고 돕는 걸 중요하게 여겨요."),
-    "ENFP": ("🎉 에너지 넘치게 다가가세요", "밝고 진심 어린 관심을 보여주는 걸 좋아해요."),
-    "ISTJ": ("🗂️ 신뢰를 쌓는 게 먼저예요", "꾸준함과 성실함을 보여주세요."),
-    "ISFJ": ("☕ 따뜻한 분위기로 다가가세요", "작은 배려와 관심을 귀하게 여겨요."),
-    "ESTJ": ("📈 논리적인 대화를 시도해보세요", "실용적이고 효율적인 걸 중시해요."),
-    "ESFJ": ("🫂 함께하는 경험을 공유하세요", "함께 시간을 보내는 걸 중요하게 생각해요."),
-    "ISTP": ("🔧 관심사를 가볍게 공유하세요", "기술, 장비, 취미 등 실용적인 주제에 반응해요."),
-    "ISFP": ("🌿 조용히 곁에 있어주세요", "부드럽고 자연스러운 접근을 좋아해요."),
-    "ESTP": ("🏃‍♂️ 액티브하게 다가가세요", "즉흥적이고 활동적인 분위기를 즐겨요."),
-    "ESFP": ("🎤 즐겁게 놀면서 친해지세요", "에너지 넘치고 유쾌한 교류에 강해요!")
+# ✅ 기능별 친해지는 팁
+difference_tips = {
+    ("E", "I"): "🎧 조용한 분위기에서 천천히 다가가 보세요. 내향형은 에너지 충전 시간이 필요해요.",
+    ("I", "E"): "🎤 활기찬 활동에 함께 참여하며 자연스럽게 친해져 보세요!",
+    ("S", "N"): "🌌 추상적 이야기에도 열린 마음으로 귀 기울여 보세요. 직관형은 상상과 아이디어를 즐겨요.",
+    ("N", "S"): "🧭 현실적인 대화와 구체적인 예시로 다가가면 신뢰를 얻을 수 있어요.",
+    ("T", "F"): "💞 논리보단 감정에 공감해 주세요. 따뜻한 한 마디가 더 효과적일 수 있어요.",
+    ("F", "T"): "🧠 비판을 개인적인 것으로 받아들이기보다, 문제 해결 의도를 이해해보세요.",
+    ("P", "J"): "📅 계획을 존중하고, 약속은 가능한 한 지켜주는 게 좋아요!",
+    ("J", "P"): "🧘‍♂️ 상대의 유연함을 존중하고, 일정이 바뀌어도 여유를 가져보세요."
 }
 
-# 🎨 Streamlit 설정
-st.set_page_config(page_title="MBTI 친구 사귀기 팁", page_icon="🧑‍🤝‍🧑")
+# ✅ MBTI 기능 추출 함수
+def extract_mbti_functions(mbti):
+    return {
+        "EI": mbti[0],
+        "SN": mbti[1],
+        "TF": mbti[2],
+        "PJ": mbti[3]
+    }
 
-# 🎉 타이틀
-st.title("🤝 MBTI별 친구 사귀기 꿀팁 서비스 🌟")
-st.markdown("MBTI를 선택하면, **그 사람과 친해지는 비법**을 알려드릴게요! 💌")
+# ✅ 스트림릿 앱 시작
+st.set_page_config(page_title="MBTI 차이로 친해지는 팁 💌", page_icon="🤝")
+st.title("🤝 나와 친구의 MBTI 차이로 알아보는 친해지는 방법 ✨")
+st.markdown("당신과 친구의 MBTI를 선택하면, 서로 다른 성향을 이해하고 가까워질 수 있는 팁을 알려드릴게요! 💡")
 
-# 🔽 MBTI 선택
-selected_mbti = st.selectbox("친해지고 싶은 사람의 MBTI를 선택해주세요 👇", [""] + list(mbti_tips.keys()))
+# ✅ MBTI 선택
+mbti_list = [
+    "INTJ", "INTP", "ENTJ", "ENTP",
+    "INFJ", "INFP", "ENFJ", "ENFP",
+    "ISTJ", "ISFJ", "ESTJ", "ESFJ",
+    "ISTP", "ISFP", "ESTP", "ESFP"
+]
 
-# ✅ 추천 출력
-if selected_mbti:
-    title, tip = mbti_tips[selected_mbti]
-    st.success(f"💡 접근법: **{title}**")
-    st.info(f"✨ 팁: {tip}")
-    st.balloons()  # 🎈 풍선 효과 빵빵!
+my_mbti = st.selectbox("🧍 내 MBTI를 선택해주세요", [""] + mbti_list)
+friend_mbti = st.selectbox("👤 친구의 MBTI를 선택해주세요", [""] + mbti_list)
+
+# ✅ 결과 출력
+if my_mbti and friend_mbti:
+    my = extract_mbti_functions(my_mbti)
+    friend = extract_mbti_functions(friend_mbti)
+
+    st.markdown("### 💬 친해지기 팁")
+    for key in ["EI", "SN", "TF", "PJ"]:
+        if my[key] != friend[key]:
+            pair = (my[key], friend[key])
+            tip = difference_tips.get(pair)
+            if tip:
+                st.info(f"**{my[key]} vs {friend[key]}**: {tip}")
+
+    st.balloons()
+
+elif my_mbti or friend_mbti:
+    st.warning("📌 두 사람의 MBTI를 모두 선택해주세요!")
 else:
-    st.warning("👇 아래에서 MBTI를 선택해보세요!")
+    st.info("👆 위에서 두 사람의 MBTI를 골라보세요!")
