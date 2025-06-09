@@ -25,18 +25,16 @@ st.set_page_config(page_title="MBTI 과학 영화 추천", page_icon="🎥")
 
 # 🎉 타이틀과 설명
 st.title("🎥 MBTI 과학 명작 영화 추천기 🚀")
-st.markdown("당신의 MBTI를 입력하면, **성격에 딱 맞는 과학 영화**를 추천해드릴게요! 💡")
+st.markdown("당신의 MBTI를 선택하면, **성격에 딱 맞는 과학 영화**를 추천해드릴게요! 💡")
 
-# 🎯 사용자 입력
-user_mbti = st.text_input("당신의 MBTI를 입력해주세요 (예: INFP)", max_chars=4).upper()
+# 🎯 MBTI 선택
+selected_mbti = st.selectbox("당신의 MBTI를 선택해주세요 👇", [""] + list(mbti_movies.keys()))
 
-if user_mbti:
-    if user_mbti in mbti_movies:
-        movie, reason = mbti_movies[user_mbti]
-        st.success(f"🎬 추천 영화: **{movie}**")
-        st.info(f"💡 이유: {reason}")
-        st.balloons()  # 🎈 풍선 효과!
-    else:
-        st.error("❌ 올바른 MBTI를 입력해주세요. 예: ENFP, ISTJ 등")
+# ✅ 추천 결과
+if selected_mbti:
+    movie, reason = mbti_movies[selected_mbti]
+    st.success(f"🎬 추천 영화: **{movie}**")
+    st.info(f"💡 이유: {reason}")
+    st.balloons()  # 🎈 풍선 효과!
 else:
-    st.warning("👉 MBTI를 입력해보세요! 예: INTP, ENFJ 등")
+    st.warning("👉 상단 드롭다운에서 MBTI를 선택해주세요!")
